@@ -50,6 +50,7 @@ namespace api.Controllers
         }
 
 
+        //ANNOTATION GET TO FIND ATTRIBUTE
 
         [HttpGet("api/{id}")]
         public Person search(int id)
@@ -58,6 +59,38 @@ namespace api.Controllers
 
             return p;
         }
+
+
+         //ANNOTATION PUT
+        [HttpPut("api")]
+
+        public async Task<ActionResult> edit([FromBody] Person p)
+        {
+
+            dc.person.Update(p);
+            await dc.SaveChangesAsync();
+            return Ok(p);
+
+        }
+        
+
+         //ANNOTATION PUT
+        [HttpDelete("api/{id}")]
+
+        public async Task<ActionResult> delete(int id) {
+            Person p = search(id);
+            if (p == null){
+                return NotFound();
+            } else {
+                dc.person.Remove(p);
+                await dc.SaveChangesAsync();
+                return Ok();
+            }
+
+
+        }
+
+
 
 
 
